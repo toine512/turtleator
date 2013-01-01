@@ -35,7 +35,7 @@ if(isset($_GET['v']))
 			else if(strlen($_GET['v'] = trim($_GET['v'])) > 10) //No, then it's Youtube video id. (11 chars)
 			{
 				$title = 'ಠ_ಠ';
-				$vid = htmlspecialchars(substr($_GET['v'], 0, 11)); //"turtle" is 6 chars long, so it is able to pass here. (see below)
+				$vid = htmlspecialchars(substr($_GET['v'], 0, 11));
 			}
 			//Else you're being turtle'd anyway.
 		}
