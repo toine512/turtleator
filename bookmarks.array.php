@@ -1,0 +1,37 @@
+<?php
+$bookmarks = array(
+'pasfaux'   => array('id' => '-5NipHAtvHY', 'title' => 'C\'est pas faux.'),
+'merde'     => array('id' => 'y-KhLsbMwEQ', 'title' => 'C\'est de la merde.'),
+'botte'     => array('id' => 'Yt5saiPrygA', 'title' => 'La botte secrète'),
+'eneffet'   => array('id' => 'MJfbNNBbTsM', 'title' => 'En effet.'),
+'unac'      => array('id' => 'aaSRYecKaqc', 'title' => 'UNACCEPTABLE!'),
+'eyes'      => array('id' => 'V-fRuoMIfpw', 'title' => 'I HAVE SPECIAL EYES!'),
+'dundundun' => array('id' => 'y8Kyi0WNg40', 'title' => 'DUN DUN DUN'),
+'glasscase' => array('id' => 'FwXD0hCvtX4', 'title' => 'I\'m in a glass case of emotions!'),
+'alan'      => array('id' => 'XgvR3y5JCXg', 'title' => 'Alan,Alan, Alan, Alan, Alan, Ow, Ow, Steve, Steve, Steve...Hey, Hey, Hey...'),
+'asdf'      => array('id' => 'IYnsfV5N2n8', 'title' => 'asdfmovie'),
+'asdf1'     => array('id' => 'IYnsfV5N2n8', 'title' => 'asdfmovie'), //alias
+'asdf2'     => array('id' => 'tKB4h9gvmm0', 'title' => 'asdfmovie2'),
+'asdf3'     => array('id' => 'oY6tCnu-1Do', 'title' => 'asdfmovie3'),
+'asdf4'     => array('id' => 'cYNdUM2gRsg', 'title' => 'asdfmovie4'),
+'asdf5'     => array('id' => 'tCnj-uiRCn8', 'title' => 'asdfmovie5'),
+'cafe'      => array('id' => 'UGtKGX8B9hU', 'title' => 'Le Café - Oldelaf'),
+'café'      => array('id' => 'UGtKGX8B9hU', 'title' => 'Le Café - Oldelaf'), //alias
+'yuki'      => array('id' => 'NI_fgwbmJg0', 'title' => 'Yuki Yuki Yuki', 'loop' => true),
+'baka'      => array('id' => '5wFDWP5JwSM', 'title' => 'BAAKA BAKA !', 'loop' => true),
+'fukkireta' => array('id' => 'yS5RUcyOZiQ', 'title' => 'Fukkireta - Kasane Teto', 'loop' => true),
+'nyan'      => array('id' => 'QH2-TGUlwu4', 'title' => 'Nyan Cat'),
+'pasta'     => array('id' => 'cmYkUEnIzYY', 'title' => 'PASTAAAA~'),
+'hobbits'   => array('id' => 'uE-1RPDqJAY', 'title' => 'They\'re Taking the Hobbits to Isengard', 'loop' => true),
+'nimu'      => array('id' => 'vTuOBXZ3upA', 'title' => 'Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu'),
+'puddi'     => array('id' => '9sEI1AUFJKw', 'title' => 'PUDDI PUDDI'),
+'heyyey'    => array('id' => 'ZZ5LpwO-An4', 'title' => 'HEYYEYAAEYAAAEYAEYAA', 'loop' => true),
+'aperture'  => array('id' => 'JZIVmKOdrBk', 'title' => 'This Is Aperture'),
+'suprise'   => array('id' => 'fqyjOc3EpT4', 'title' => 'Suprise'),
+'woop'      => array('id' => '-Rnw0D2AdYU', 'title' => 'woop woop woop'),
+'infwoop'   => array('id' => 'j-0FKH6ph3M', 'title' => '∞ woop woop woop', 'loop' => true),
+'woahoh'    => array('id' => '6EfhAFA2yFE', 'title' => 'WOAH-OH-OH-AH-AH-AH-AAAA-HA-AH-AH-AH', 'loop' => true),
+'rainbow'   => array('id' => 'MX0D4oZwCsA', 'title' => 'Double Rainbow Song', 'loop' => true),
+'peutetre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429),
+'peutêtre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429) //alias
+);
