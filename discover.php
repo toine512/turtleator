@@ -86,6 +86,8 @@ foreach($bookmarks as $key => $value)
 	<pre>http://turtle.toine512.fr/yuki?c</pre>
 	<pre>http://v.toine512.fr/yuki?c</pre>
 	<pre>http://v.toine512.fr/yuki?l=0&amp;c</pre>
+	<h3>Player keyboard controls</h3>
+	<p>Spacebar: Play / Pause<br />Arrow Left: Jump back 10% in the current video<br />Arrow Right: Jump ahead 10% in the current video<br />Arrow Up: Volume up<br />Arrow Down: Volume Down</p>
 </body>
 <!-- Powered by GLaDOS. -->
 <?php
