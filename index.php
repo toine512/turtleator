@@ -59,10 +59,13 @@ if(isset($_GET['l']))
 <!DOCTYPE html>
 
 <html lang="en">
+<!-- See discover.php for the list of bookmarks and some minimalistic instructions. -->
 <head>
 	<meta charset="utf-8" />
 	<title><?php echo $title; ?></title>
-<?php if($vid == 'DI5_sQ8O-7Y') {echo '	<link rel="icon" href="mineturtle.png" sizes="32x32" type="image/png" />' . "\n";} ?>
+<?php if($vid == 'DI5_sQ8O-7Y'): ?>
+	<link rel="icon" href="mineturtle.png" sizes="32x32" type="image/png" />
+<?php endif; ?>
 	<style>
 html, body, iframe {
 	position: absolute;
@@ -74,11 +77,25 @@ html, body, iframe {
 	border: none;
 }
 	</style>
+<?php if($loop): ?>
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+	<script type="text/javascript">
+var ytplayer;
+function onYouTubeIframeAPIReady() {
+    ytplayer = new YT.Player('ytplayer', { events: {'onStateChange': onPlayerStateChange} });
+}
+
+function onPlayerStateChange(event) {
+    if(event.data == YT.PlayerState.ENDED) {
+        event.target.playVideo();
+    }
+}
+	</script>
+<?php endif; ?>
 </head>
 <body>
-	<iframe seamless src="https://www.youtube.com/embed/<?php echo $vid; ?>?modestbranding=1&amp;autoplay=1&amp;rel=0&amp;<?php echo /*Player controls forcing*/ (isset($_GET['c'])) ? 'controls=1&amp;showinfo=1' : 'controls=0&amp;showinfo=0'; /***/ /*Loop control*/ if($loop) {echo '&amp;loop=1&amp;playlist=,';} /***/ /*Video start time*/ if($start > 0) {echo '&amp;start=' . $start;} /***/ /*Video end time*/ if($end > 0) {echo '&amp;end=' . $end;} /***/?>"></iframe>
+	<iframe id="ytplayer" seamless src="https://www.youtube.com/embed/<?php echo $vid; ?>?modestbranding=1&amp;autoplay=1&amp;rel=0&amp;<?php echo /*Player controls forcing*/ (isset($_GET['c'])) ? 'controls=1&amp;showinfo=1' : 'controls=0&amp;showinfo=0'; /***/ /*Video start time*/ if($start > 0) {echo '&amp;start=' . $start;} /***/ /*Video end time*/ if($end > 0) {echo '&amp;end=' . $end;} /***/ /*Loop control*/ if($loop) {echo '&amp;enablejsapi=1&amp;origin=http://' . $_SERVER['HTTP_HOST'];} /***/?>"></iframe>
 </body>
-<!-- See discover.php for the list of bookmarks and some minimalistic instructions. -->
 <!-- Powered by GLaDOS. -->
 <?php
 $time_end = microtime(true);
