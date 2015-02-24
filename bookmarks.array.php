@@ -33,5 +33,9 @@ $bookmarks = array(
 'woahoh'    => array('id' => '6EfhAFA2yFE', 'title' => 'WOAH-OH-OH-AH-AH-AH-AAAA-HA-AH-AH-AH', 'loop' => true),
 'rainbow'   => array('id' => 'MX0D4oZwCsA', 'title' => 'Double Rainbow Song', 'loop' => true),
 'peutetre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429),
-'peutêtre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429) //alias
+'peutêtre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429), //alias
+'always'    => array('id' => 'eSMeUPFjQHc', 'title' => 'Always - Erasure'),
+'fuwa'      => array('id' => 'Emxkj5rNCvc', 'title' => 'Fuwa fuwa fuwaffu~ - Momoko'),
+'ehhehe'    => array('id' => '3UjuYtgMDIg', 'title' => 'Voldemort laughing like a retard'),
+'tunak'     => array('id' => 'mg-4c4uQmdo', 'title' => 'Tunak Tunak Tun - Daler Mehndi')
 );
