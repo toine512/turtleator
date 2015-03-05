@@ -1,8 +1,9 @@
 <?php
 $bookmarks = array(
 'pasfaux'   => array('id' => '-5NipHAtvHY', 'title' => 'C\'est pas faux.'),
-'merde'     => array('id' => 'y-KhLsbMwEQ', 'title' => 'C\'est de la merde.'),
-'botte'     => array('id' => 'Yt5saiPrygA', 'title' => 'La botte secrète'),
+'merde'     => array('id' => 'M1r4d2UWRPc', 'title' => 'C\'est d\'la merde.'),
+'gras'      => array('id' => '5FvKK5NHQ9A', 'title' => 'Le gras, c\'est la vie.'),
+/*'botte'     => array('id' => 'Yt5saiPrygA', 'title' => 'La botte secrète'),*/
 'eneffet'   => array('id' => 'MJfbNNBbTsM', 'title' => 'En effet.'),
 'unac'      => array('id' => 'aaSRYecKaqc', 'title' => 'UNACCEPTABLE!'),
 'eyes'      => array('id' => 'V-fRuoMIfpw', 'title' => 'I HAVE SPECIAL EYES!'),
@@ -10,18 +11,19 @@ $bookmarks = array(
 'glasscase' => array('id' => 'FwXD0hCvtX4', 'title' => 'I\'m in a glass case of emotions!'),
 'alan'      => array('id' => 'XgvR3y5JCXg', 'title' => 'Alan,Alan, Alan, Alan, Alan, Ow, Ow, Steve, Steve, Steve...Hey, Hey, Hey...'),
 'asdf'      => array('id' => 'IYnsfV5N2n8', 'title' => 'asdfmovie'),
-'asdf1'     => array('id' => 'IYnsfV5N2n8', 'title' => 'asdfmovie'), //alias
+'asdf1'     => array('alias' => 'asdf'), //alias
 'asdf2'     => array('id' => 'tKB4h9gvmm0', 'title' => 'asdfmovie2'),
 'asdf3'     => array('id' => 'oY6tCnu-1Do', 'title' => 'asdfmovie3'),
 'asdf4'     => array('id' => 'cYNdUM2gRsg', 'title' => 'asdfmovie4'),
 'asdf5'     => array('id' => 'tCnj-uiRCn8', 'title' => 'asdfmovie5'),
 'cafe'      => array('id' => 'UGtKGX8B9hU', 'title' => 'Le Café - Oldelaf'),
-'café'      => array('id' => 'UGtKGX8B9hU', 'title' => 'Le Café - Oldelaf'), //alias
+'café'      => array('alias' => 'cafe'), //alias
 'yuki'      => array('id' => 'NI_fgwbmJg0', 'title' => 'Yuki Yuki Yuki', 'loop' => true),
 'baka'      => array('id' => '5wFDWP5JwSM', 'title' => 'BAAKA BAKA !', 'loop' => true),
 'fukkireta' => array('id' => 'yS5RUcyOZiQ', 'title' => 'Fukkireta - Kasane Teto', 'loop' => true),
+'fukkireta2'=> array('id' => 'kuNixp-wvWM', 'title' => 'Lon\'s Fukkireta', 'loop' => true),
 'nyan'      => array('id' => 'QH2-TGUlwu4', 'title' => 'Nyan Cat'),
-'pasta'     => array('id' => 'cmYkUEnIzYY', 'title' => 'PASTAAAA~'),
+'pasta'     => array('id' => 'FU8klxyzYgc', 'title' => 'PASTAAAA~'),
 'hobbits'   => array('id' => 'uE-1RPDqJAY', 'title' => 'They\'re Taking the Hobbits to Isengard', 'loop' => true),
 'nimu'      => array('id' => 'vTuOBXZ3upA', 'title' => 'Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu'),
 'puddi'     => array('id' => '9sEI1AUFJKw', 'title' => 'PUDDI PUDDI'),
@@ -32,10 +34,23 @@ $bookmarks = array(
 'infwoop'   => array('id' => 'j-0FKH6ph3M', 'title' => '∞ woop woop woop', 'loop' => true),
 'woahoh'    => array('id' => '6EfhAFA2yFE', 'title' => 'WOAH-OH-OH-AH-AH-AH-AAAA-HA-AH-AH-AH', 'loop' => true),
 'rainbow'   => array('id' => 'MX0D4oZwCsA', 'title' => 'Double Rainbow Song', 'loop' => true),
-'peutetre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429),
-'peutêtre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429), //alias
+/*'peutetre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429),
+'peutêtre'  => array('id' => 'bH6knzmMaJo', 'title' => '.. Mais peut-être !', 'start' => 424, 'end' => 429), //alias*/
 'always'    => array('id' => 'eSMeUPFjQHc', 'title' => 'Always - Erasure'),
-'fuwa'      => array('id' => 'Emxkj5rNCvc', 'title' => 'Fuwa fuwa fuwaffu~ - Momoko'),
+'fuwa'      => array('id' => 'UPeb6Y6IYqw', 'title' => 'Fuwa fuwa fuwaffu~ - Momoko'),
 'ehhehe'    => array('id' => '3UjuYtgMDIg', 'title' => 'Voldemort laughing like a retard'),
-'tunak'     => array('id' => 'mg-4c4uQmdo', 'title' => 'Tunak Tunak Tun - Daler Mehndi')
+'tunak'     => array('id' => 'mg-4c4uQmdo', 'title' => 'Tunak Tunak Tun - Daler Mehndi'),
+'trouducul' => array('id' => 'x-XrHp6K38Q', 'title' => 'Entouré de trous du cul', 'start' => 1025, 'end' => 1046),
+'bipzip'    => array('id' => 'x-XrHp6K38Q', 'title' => 'J\'ai perdu les bips', 'start' => 1248, 'end' => 1280),
+'rain'      => array('id' => 'p3YMBOn_sxY', 'title' => 'Omoi wa rain - Nakagawa Kanon', 'loop' => true),
+'rainl'     => array('id' => 'pWSuLC-lBUQ', 'title' => 'Omoi wa rain - Tōyama Nao (live)', 'loop' => true),
+'crescent'  => array('id' => 'WyJJqPskHyg', 'title' => 'Happy crescent - Nakagawa Kanon', 'loop' => true),
+'crescentl' => array('id' => 'jl_YOFe42K0', 'title' => 'Happy crescent - Tōyama Nao (live)', 'start' => 15, 'end' => 241, 'loop' => true),
+'dumb'      => array('id' => 'IJNR2EpS0jw', 'title' => 'Dumb Ways to Die'),
+'indeed'    => array('id' => 'rn8m8INH0wc', 'title' => 'Indeed! (Septimus)'),
+'maromi'    => array('id' => '6WDO8KDjs4M', 'title' => 'Maromi no theme - Shiori Oka (Paranoia Agent)', 'loop' => true),
+'vole'      => array('id' => 'VVpf8lGIriQ', 'title' => 'Ils nous l\'ont volé !'),
+'volé'      => array('alias' => 'vole'), //alias
+'fuck'      => array('id' => 'cACZc6gYi9s', 'title' => 'We fuck the world'),
+'polkka'    => array('id' => '4om1rQKPijI', 'title' => 'Ievan Polkka - Loituma')
 );
