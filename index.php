@@ -15,21 +15,37 @@ if(isset($_GET['v']))
 		if($_GET['v'] != 'turtle' && $_GET['v'] != 'mineturtle' && $_GET['v'] != 'mine turtle') //You explicitly want to be turtle'd here! So we'll keep default Turtleator values.
 		{
 			require('bookmarks.array.php'); //Loads $bookmarks
-			if(array_key_exists($_GET['v'], $bookmarks)) //Is it a bookmark ?
+			function resolve_bookmark($v, $bookmarks)
 			{
-				$title = $bookmarks[$_GET['v']]['title'];
-				$vid = $bookmarks[$_GET['v']]['id'];
-				if(array_key_exists('loop', $bookmarks[$_GET['v']]))
+				if(array_key_exists($v, $bookmarks)) {
+					$bm = $bookmarks[$v];
+					if(array_key_exists('alias', $bm)) {
+						return resolve_bookmark($bm['alias'], $bookmarks);
+					}
+					else {
+						return $bm;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+
+			if($bm = resolve_bookmark($_GET['v'], $bookmarks)) //Is it a bookmark ?
+			{
+				$title = $bm['title'];
+				$vid = $bm['id'];
+				if(array_key_exists('loop', $bm))
 				{
 					$loop = true;
 				}
-				if(array_key_exists('start', $bookmarks[$_GET['v']]))
+				if(array_key_exists('start', $bm))
 				{
-					$start = $bookmarks[$_GET['v']]['start'];
+					$start = $bm['start'];
 				}
-				if(array_key_exists('start', $bookmarks[$_GET['v']]))
+				if(array_key_exists('start', $bm))
 				{
-					$end = $bookmarks[$_GET['v']]['end'];
+					$end = $bm['end'];
 				}
 			}
 			else if(strlen($_GET['v'] = trim($_GET['v'])) > 10) //No, then it's Youtube video id. (11 chars)
