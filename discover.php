@@ -1,25 +1,121 @@
 <?php
 $time_start = microtime(true);
-require('bookmarks.array.php'); //Loads $bookmarks
+
+require('_conf/bookmarks.array.php'); //Loads $bookmarks
+//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
+$check = array();
+foreach($bookmarks as $key => $line)
+{
+	if(array_key_exists('alias', $line)) {
+		$bookmarks[$line['alias']]['aliases'][] = $key;
+		unset($bookmarks[$key]);
+	}
+	else {
+		$check[$line['id']] = false;
+	}
+}
+
+//Youtube availability checking
+require('_conf/yt_api_key.php'); //Loads Youtube API server private key
+
+$online_check_success = true;
+foreach(array_chunk(array_keys($check), 50, true) as $chunk)
+{
+	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=' . implode('%2C', $chunk) . '&fields=items(contentDetails%2Cid)&key=' . $YT_API_KEY);
+	if($res === false) {
+		$online_check_success = false;
+		break;
+	}
+	else {
+		$json = json_decode($res, true);
+		/*echo '<pre>';
+		print_r($json);
+		echo '</pre>';*/
+		if($json === null) {
+			$online_check_success = false;
+			break;
+		}
+		else {
+			if(isset($json['items'])) {
+				$list = array();
+				foreach($json['items'] as $item) {
+					$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
+				}
+				if(!empty($list)) {
+					$check = array_merge($check, $list);
+				}
+			}
+			else {
+				$online_check_success = false;
+				break;
+			}
+		}	
+	}
+}
 ?>
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<title>toine512 bookmark list</title>
-	<link rel="icon" href="mineturtle.png" sizes="32x32" type="image/png" />
-	<style>
-	</style>
+		<meta charset="UTF-8">
+		<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+		<title>toine512 bookmark list</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="_img/mineturtle.png" sizes="32x32" type="image/png" />
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link rel="stylesheet" href="_css/styles.css" media="all" />
 </head>
 <body>
-	<h1>toine512 TROLOLOL Youtube shortener (aka Turtleator)</h1>
-	<h2>(**with awesome fullpage crap!)</h2>
-	<h3>Play any Youtube video fullpage, without controls.</h3>
-	<p>http://<b>turtle</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
-	<p>http://<b>v</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
-	<p>See below for manual looping control and controls re-enabling.</p>
-	<h3>List of bookmarks.</h3>
+	<section>
+		<h1>toine512 TROLOLOL Youtube shortener (aka Turtleator)</h1>
+		<h2>(**with awesome fullpage crap!)</h2>
+		<h3>Play any Youtube video fullpage, without controls.</h3>
+		<p>http://<b>turtle</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
+		<p>http://<b>v</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
+		<p>See below for manual looping control and controls re-enabling.</p>
+	</section>
+	<section>
+		<h3>List of bookmarks.</h3>
+<?php if(!$online_check_success) : ?>
+		<p>Availability checking of Youtube videos failed!</p>
+<?php endif; ?>
+		<div id="gallery">
+<?php
+foreach($bookmarks as $key => $video) :
+
+	//Determines which classes need to be applied to the element
+	$classes = array();
+	if(array_key_exists('loop', $video)) {
+		$classes[] = 'loops'; }
+
+	if($online_check_success)
+	{
+		if($check[$video['id']] === false) {
+			$classes[] = 'dead'; }
+		elseif($check[$video['id']] !== true) {
+			$classes[] = 'blocked'; }
+	}
+?>
+			<figure<?php if(!empty($classes)) { echo ' class="' . implode(' ', $classes) . '"'; } ?>>
+<?php if(in_array('blocked', $classes)) : ?>
+				<p>Blocked : <?php echo htmlspecialchars(implode(' ', $check[$video['id']])); ?></p>
+<?php endif; ?>
+				<img src="https://img.youtube.com/vi/<?php echo $video['id']; ?>/mqdefault.jpg" alt="video thumbnail" />
+<?php if(in_array('dead', $classes)) : ?>
+				<p>OFFLINE</p>
+<?php else : ?>
+				<div class="more"><pre><?php echo $key . (array_key_exists('aliases', $video) ? implode('', $video['aliases']) : ''); ?></pre></div>
+<?php endif; ?>
+				<figcaption title="<?php echo htmlspecialchars($video['title']); ?>"><a href="http://v.toine512.fr/<?php echo $key ?>" target="_blank"><span><?php echo htmlspecialchars($video['title']); ?></span></a></figcaption>
+			</figure>
+<?php
+endforeach;
+?>
+		</div>
+	</section>
+<?php /*	
 	<table>
 		<caption>∞ table of happiness:</caption>
 		<tr>
@@ -61,7 +157,7 @@ foreach($bookmarks as $key => $value)
 	echo "\t\t\t<td><a href=\"http://v.toine512.fr/" . htmlspecialchars($key) . '">http://v.toine512.fr/' . htmlspecialchars($key) . "</a></td>\n\t\t</tr>\n";
 }
 ?>
-	</table>
+	</table> */?>
 	<h3>Now with ∞ loop of pain!</h3>
 	<table>
 		<caption>Manual parameters:</caption>

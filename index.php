@@ -7,6 +7,16 @@ $loop = false;
 $start = 0;
 $end = 0;
 
+//Loop control, in auto mode the default setting is to loop the video
+//See below for loop forcing
+if(isset($_GET['l']))
+{
+	if($_GET['l'] == 'auto')
+	{
+		$loop = true;
+	}
+}
+
 //Does GET v exist ?
 if(isset($_GET['v']))
 {
@@ -14,7 +24,7 @@ if(isset($_GET['v']))
 	{
 		if($_GET['v'] != 'turtle' && $_GET['v'] != 'mineturtle' && $_GET['v'] != 'mine turtle') //You explicitly want to be turtle'd here! So we'll keep default Turtleator values.
 		{
-			require('bookmarks.array.php'); //Loads $bookmarks
+			require('_conf/bookmarks.array.php'); //Loads $bookmarks
 			function resolve_bookmark($v, $bookmarks)
 			{
 				if(array_key_exists($v, $bookmarks)) {
@@ -58,17 +68,20 @@ if(isset($_GET['v']))
 	}
 }
 
-//Loop forcing, does GET l exist ?
-//Overrides bookmark settings
+//Loop forcing
+//Overrides bookmark settings if not auto, if l == 'auto', see at the top of this file
 if(isset($_GET['l']))
 {
-	if($_GET['l'] == 'false' || $_GET['l'] == '0')
+	if($_GET['l'] != 'auto')
 	{
-		$loop = false;
-	}
-	else
-	{
-		$loop = true;
+		if($_GET['l'] == 'false' || $_GET['l'] == '0')
+		{
+			$loop = false;
+		}
+		else
+		{
+			$loop = true;
+		}
 	}
 }
 ?>
@@ -80,7 +93,7 @@ if(isset($_GET['l']))
 	<meta charset="utf-8" />
 	<title><?php echo $title; ?></title>
 <?php if($vid == 'DI5_sQ8O-7Y'): ?>
-	<link rel="icon" href="mineturtle.png" sizes="32x32" type="image/png" />
+	<link rel="icon" href="_img/mineturtle.png" sizes="32x32" type="image/png" />
 <?php endif; ?>
 	<style>
 html, body, iframe {

@@ -1,0 +1,398 @@
+/*!
+* Part from KNACSS:
+* www.KNACSS.com V3.1.0 (2014-10-20) @author: Raphael Goetter, Alsacreations
+* Licence WTFPL http://www.wtfpl.net/
+*/
+/* ----------------------------- */
+/* == soft reset                 */
+/* ----------------------------- */
+/* soft reset */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+ul,
+ol {
+  padding-left: 2em;
+}
+ul.unstyled {
+  list-style: none;
+}
+img {
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+}
+blockquote,
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+/* ----------------------------- */
+/* == typography                 */
+/* ----------------------------- */
+html {
+  /* set base font-size to equiv "10px", which is adapted to rem unit */
+  font-size: 62.5%;
+  /* IE9-IE11 math fixing. See http://bit.ly/1g4X0bX */
+  /* thanks to @guardian, @victorbritopro and @eQRoeil */
+  font-size: -webkit-calc(0.625em);
+  font-size: calc(0.625em);
+  /* disallow text zooming on orientation change (non standard property) */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+body {
+  /* set body font-size in em (1.4em equiv "14px") */
+  font-size: 1.4em;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+a {
+  color: #333333;
+}
+a:hover,
+a:focus,
+a:active {
+  color: #000000;
+}
+/* font-sizing for content */
+p,
+.p-like,
+ul,
+ol,
+dl,
+blockquote,
+pre,
+td,
+th,
+label,
+textarea,
+caption,
+details,
+figure {
+  margin-top: 0.75em;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+h1,
+.h1-like {
+  font-size: 3.2rem;
+  font-family: Helvetica, Arial, sans-serif;
+}
+h2,
+.h2-like {
+  font-size: 2.8rem;
+  font-family: Helvetica, Arial, sans-serif;
+}
+h3,
+.h3-like {
+  font-size: 2.4rem;
+}
+h4,
+.h4-like {
+  font-size: 2rem;
+}
+h5,
+.h5-like {
+  font-size: 1.8rem;
+}
+h6,
+.h6-like {
+  font-size: 1.6rem;
+}
+/* alternate font-sizing */
+.smaller {
+  font-size: 0.71em;
+}
+.small {
+  font-size: 0.86em;
+}
+.big {
+  font-size: 1.14em;
+}
+.bigger {
+  font-size: 1.29em;
+}
+.biggest {
+  font-size: 1.43em;
+}
+code,
+pre,
+samp,
+kbd {
+  /* IE fix */
+  white-space: pre-line;
+  white-space: pre-wrap;
+  font-family: Consolas, 'DejaVu Sans Mono', Courier, monospace;
+  line-height: normal;
+}
+em,
+.italic,
+address,
+cite,
+dfn,
+i,
+var {
+  font-style: italic;
+}
+strong,
+.bold {
+  font-weight: bold;
+}
+small,
+sub,
+sup {
+  font-size: smaller;
+}
+/* ----------------------------- */
+/* == hiding content             */
+/* ----------------------------- */
+/* hidden but not for an assistive technology like a screen reader, Yahoo! method */
+.visually-hidden {
+  position: absolute !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+}
+body > script {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .no-small-screen {
+    display: none;
+  }
+}
+@media (min-width: 1280px) {
+  .no-large-screen {
+    display: none;
+  }
+}
+/* ----------------------------- */
+/* == browsers consistency       */
+/* ----------------------------- */
+/* avoid top margins on first content element */
+p:first-child,
+.p-like:first-child,
+ul:first-child,
+ol:first-child,
+dl:first-child,
+blockquote:first-child,
+pre:first-child,
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0;
+}
+/* avoid margins on nested elements */
+li p,
+li .p-like,
+li ul,
+li ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* max values */
+img,
+table,
+td,
+blockquote,
+code,
+pre,
+textarea,
+input,
+video {
+  max-width: 100%;
+}
+/* margin-bottom on tables */
+table {
+  margin-bottom: 20px;
+}
+
+
+/* Style code */
+#gallery {
+	margin: 20px;
+	display: flex;
+	flex-direction: row;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: stretch;
+}
+
+#gallery figure {
+	position: relative;
+	margin: 12px;
+	min-width: 256px;
+	max-width: 256px;
+	height: 170px;
+	border: 1px solid #D3D3D3;
+	border-radius: 9px;
+	overflow: hidden;
+	background-color: #F8F8F8;
+	box-shadow: 1px 2px 2px 1px #EDEDED;
+}
+
+#gallery figure * {
+	margin: 0px;
+	padding: 0px;
+}
+
+#gallery figure.loops {
+	border: 1px solid #FF9F13;
+	box-shadow: 0px 0px 4px 0px #FF9F13;
+}
+
+#gallery figure.blocked, #gallery figure.dead {
+	border: 1px solid #FF0000;
+	box-shadow: 0px 0px 2px 1px #FF0000;
+}
+
+#gallery figure.blocked > p:first-child {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+	
+	width: 256px;
+	max-height: 144px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	overflow: auto;
+
+	color: #FFFFFF;
+	font-weight: 700;
+	font-size: 1.1rem;
+	
+	background-color: rgba(255, 0, 0, 0.8);
+}
+
+#gallery figure.dead p {
+	position: absolute;
+	top: 0px;
+	z-index: 2;
+	
+	width: 100%;
+	height: 144px;
+	line-height: 144px;
+	overflow: hidden;
+
+	cursor: default;
+	color: #FF0000;
+	font-weight: 700;
+	font-size: 4.5rem;
+	letter-spacing: 5px;
+	text-align: center;
+	vertical-align: middle;
+	
+	background-color: #E9E9E9;
+	opacity: 0.5;
+}
+
+#gallery figure.dead a {
+	pointer-events: none;
+	cursor: default;
+}
+
+#gallery figure:hover {
+	background-color: #F0F0F0;
+}
+
+#gallery figure:focus, #gallery figure:active {
+	background-color: #E9E9E9;
+	border: 1px solid #4FA6FD;
+	box-shadow: 0px 0px 4px 0px #4FA6FD;
+}
+
+#gallery figure .more {
+	position: absolute;
+	top: 0px;
+	z-index: 2;
+	display: none;
+	
+	width: 100%;
+	height: 144px;
+	/*line-height: 144px;*/
+	overflow: hidden;
+
+	cursor: pointer;
+	color: #FFFFFF;
+	font-weight: 700;
+	text-align: center;
+	/*
+	font-size: 4.5rem;
+	letter-spacing: 5px;
+	vertical-align: middle;*/
+	
+	/*background-color: rgba(0, 160, 216, 0.6);*/
+	background-color: rgba(0, 122, 165, 0.6);
+}
+
+#gallery figure img:hover + div.more {
+	display: block;
+}
+
+#gallery figure div.more:hover {
+	display: block;
+}
+
+#gallery figure img {
+	width: 256px;
+	height: 144px;
+}
+
+#gallery figure figcaption {
+	position: absolute;
+	top: 144px;
+	bottom: 0px;
+	width: 100%;
+}
+
+#gallery figure figcaption a {
+	display: block;
+	line-height: 24px;
+	padding-left: 5px;
+	padding-right: 19px;
+
+	color: #333333;
+	font-weight: 700;
+	font-size: 1.2rem;
+
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAD1BMVEX///8AAAAAAAAAAAAAAABRO2rwAAAABXRSTlMAESIzRJTdRHwAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzQGstOgAAAAWUlEQVQImU3N0Q2AIBAD0CIOAIYBUG8AMSxgvP1nshU//LqXXpoCwOzuJy8m4hZgFLDttQjRPbjQ11QG0hsIKi1fcsEItlMNQmjxgMCRP6zlnK2OxTHZCX4eLCARaMmRGu4AAAAASUVORK5CYII=');
+	background-size: 12px 12px;
+	background-repeat: no-repeat;
+	background-origin: padding-box;
+	background-position: 237px 50%;
+}
+
+#gallery figure figcaption a:hover {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAEHRSTlMAESIzRFVmd4iZqrvM3e7/dpUBFQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNAay06AAAAB6SURBVAiZY2BgYNB/9+7ddSDNwPX///+/IAbD/P///zEwVK4qsAcxpP//U/4PYqyfpGAPZtw3YP4PYTiANEWCGKz//39lWA9kMOT/DyhgBjFYl/BsYAAxgJYsADIMgAx5IGP+EhMX4/4GBgZOkCl/BIDC64CO2MjAAAC3iUIl/DPidgAAAABJRU5ErkJggg==');
+}
+
+#gallery figure figcaption a span {
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
