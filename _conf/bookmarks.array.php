@@ -1,6 +1,7 @@
 <?php
 $bookmarks = array(
 'feather'   => array('id' => 'P5-2-jD-42Q', 'title' => 'Feather - Nujabes (❤)', 'loop' => true),
+'letitgo'   => array('id' => 'L0MK7qz13bU', 'title' => 'Let It Go - Elsa (Frozen)', 'loop' => true),
 'pasfaux'   => array('id' => '-5NipHAtvHY', 'title' => 'C\'est pas faux.'),
 'merde'     => array('id' => 'M1r4d2UWRPc', 'title' => 'C\'est d\'la merde.'),
 'gras'      => array('id' => '5FvKK5NHQ9A', 'title' => 'Le gras, c\'est la vie.'),
@@ -56,5 +57,6 @@ $bookmarks = array(
 'polkka'    => array('id' => '4om1rQKPijI', 'title' => 'Ievan Polkka - Loituma'),
 'holy'      => array('id' => '7IPZ9K0Yopo', 'title' => 'Holy Night - Taiga & Ami (Toradora!)'),
 'holyp'     => array('id' => 'tmSXLMy1At4', 'title' => 'Holy Night (piano) by Theishter (Toradora!)'),
-'pon'       => array('id' => 'yzC4hFK5P3g', 'title' => 'PON PON PON - Kyary Pamyu Pamyu')
+'pon'       => array('id' => 'yzC4hFK5P3g', 'title' => 'PON PON PON - Kyary Pamyu Pamyu'),
+'lilgirls'  => array('id' => 'hYn7q953NTg', 'title' => 'Little Girls - Oingo Boingo')
 );
