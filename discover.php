@@ -2,45 +2,49 @@
 $time_start = microtime(true);
 
 require('_conf/bookmarks.array.php'); //Loads $bookmarks
+
 //Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
 $check = array();
 foreach($bookmarks as $key => $line)
 {
+	//Alias handling
 	if(array_key_exists('alias', $line)) {
 		$bookmarks[$line['alias']]['aliases'][] = $key;
 		unset($bookmarks[$key]);
 	}
+	//YouTube checklist construction
 	else {
 		$check[$line['id']] = false;
 	}
 }
 
 //Youtube availability checking
-require('_conf/yt_api_key.php'); //Loads Youtube API server private key
+require('_conf/yt_api_key.php'); //Loads YouTube API server private key
 
-$online_check_success = true;
-foreach(array_chunk(array_keys($check), 50, true) as $chunk)
+$online_check_success = true; //Set to false upon any critical error
+foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos.list query length to 50 items
 {
+	//YouTube API v3 call
 	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=' . implode('%2C', $chunk) . '&fields=items(contentDetails%2Cid)&key=' . $YT_API_KEY);
 	if($res === false) {
 		$online_check_success = false;
 		break;
 	}
 	else {
+		//Decode JSON response
 		$json = json_decode($res, true);
-		/*echo '<pre>';
-		print_r($json);
-		echo '</pre>';*/
 		if($json === null) {
 			$online_check_success = false;
 			break;
 		}
 		else {
 			if(isset($json['items'])) {
+				//Availability status parsing
 				$list = array();
 				foreach($json['items'] as $item) {
 					$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
 				}
+				//Merge results into the checklist
 				if(!empty($list)) {
 					$check = array_merge($check, $list);
 				}
@@ -69,9 +73,9 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk)
 </head>
 <body>
 	<section>
-		<h1>toine512 TROLOLOL Youtube shortener (aka Turtleator)</h1>
+		<h1>toine512 TROLOLOL YouTube shortener (aka Turtleator)</h1>
 		<h2>(**with awesome fullpage crap!)</h2>
-		<h3>Play any Youtube video fullpage, without controls.</h3>
+		<h3>Play any YouTube video fullpage, without controls.</h3>
 		<p>http://<b>turtle</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
 		<p>http://<b>v</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
 		<p>See below for manual looping control and controls re-enabling.</p>
@@ -79,7 +83,7 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk)
 	<section>
 		<h3>List of bookmarks.</h3>
 <?php if(!$online_check_success) : ?>
-		<p>Availability checking of Youtube videos failed!</p>
+		<p>Availability checking of YouTube videos failed!</p>
 <?php endif; ?>
 		<div id="gallery">
 <?php
