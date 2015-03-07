@@ -1,0 +1,11 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^(www\.)?you512\.tk [NC]
+RewriteCond %{QUERY_STRING} v=([0-9a-zA-Z\-_]+)
+RewriteRule ^watch$ http://v.toine512.fr/%1?c=1&l=auto [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?you512\.tk [NC]
+RewriteRule ^$ http://v.toine512.fr/ [L,R=301]
+RewriteCond %{HTTP_HOST} ^(www\.)?you512\.tk [NC]
+RewriteRule (.*) http://v.toine512.fr/$1?c=1&l=auto [L,QSA,R=301]
+
+RewriteRule .* - [F]
