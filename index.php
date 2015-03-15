@@ -53,7 +53,7 @@ if(isset($_GET['v']))
 				{
 					$start = $bm['start'];
 				}
-				if(array_key_exists('start', $bm))
+				if(array_key_exists('end', $bm))
 				{
 					$end = $bm['end'];
 				}
