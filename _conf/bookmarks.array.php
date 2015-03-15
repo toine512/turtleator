@@ -1,7 +1,7 @@
 <?php
 $bookmarks = array(
 'feather'   => array('id' => 'P5-2-jD-42Q', 'title' => 'Feather - Nujabes (❤)', 'loop' => true),
-'letitgo'   => array('id' => 'L0MK7qz13bU', 'title' => 'Let It Go - Elsa (Frozen)', 'loop' => true),
+'letitgo'   => array('id' => 'L0MK7qz13bU', 'title' => 'Let It Go - Elsa (Frozen)', 'end' => 223, 'loop' => true),
 'pasfaux'   => array('id' => '-5NipHAtvHY', 'title' => 'C\'est pas faux.'),
 'merde'     => array('id' => 'M1r4d2UWRPc', 'title' => 'C\'est d\'la merde.'),
 'gras'      => array('id' => '5FvKK5NHQ9A', 'title' => 'Le gras, c\'est la vie.'),
