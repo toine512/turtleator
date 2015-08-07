@@ -18,6 +18,10 @@ $bookmarks = array(
 'asdf3'     => array('id' => 'oY6tCnu-1Do', 'title' => 'asdfmovie3'),
 'asdf4'     => array('id' => 'cYNdUM2gRsg', 'title' => 'asdfmovie4'),
 'asdf5'     => array('id' => 'tCnj-uiRCn8', 'title' => 'asdfmovie5'),
+'asdf6'     => array('id' => 'hrzIykdka4s', 'title' => 'asdfmovie6'),
+'asdf7'     => array('id' => '5xniR1GN69U', 'title' => 'asdfmovie7'),
+'asdf8'     => array('id' => 'olit-B5Yldc', 'title' => 'asdfmovie8'),
+'asdf9'     => array('id' => '8l6T3fwxAyw', 'title' => 'asdfmovie9'),
 'cafe'      => array('id' => 'UGtKGX8B9hU', 'title' => 'Le Café - Oldelaf'),
 'café'      => array('alias' => 'cafe'), //alias
 'yuki'      => array('id' => 'NI_fgwbmJg0', 'title' => 'Yuki Yuki Yuki', 'loop' => true),
