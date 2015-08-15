@@ -112,7 +112,7 @@ foreach($bookmarks as $key => $video) :
 <?php if(in_array('dead', $classes)) : ?>
 				<p>OFFLINE</p>
 <?php else : ?>
-				<div class="more"><pre><?php echo $key . (array_key_exists('aliases', $video) ? implode('', $video['aliases']) : ''); ?></pre></div>
+				<p class="more"><a onclick="return false;" href="http://v.toine512.fr/<?php echo $key ?>" target="_blank"><span>http://v.toine512.fr/<?php echo $key ?></span><?php if(array_key_exists('aliases', $video)) { echo '<span>' . implode('', $video['aliases']) . '</span>'; } ?></a> <a onclick="return false;" href="http://youtu.be/<?php echo $video['id']; ?>" target="_blank">http://youtu.be/<?php echo $video['id']; ?></a></p>
 <?php endif; ?>
 				<figcaption title="<?php echo htmlspecialchars($video['title']); ?>"><a href="http://v.toine512.fr/<?php echo $key ?>" target="_blank"><span><?php echo htmlspecialchars($video['title']); ?></span></a></figcaption>
 			</figure>
