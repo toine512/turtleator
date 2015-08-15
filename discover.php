@@ -25,7 +25,7 @@ $online_check_success = true; //Set to false upon any critical error
 foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos.list query length to 50 items
 {
 	//YouTube API v3 call
-	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=' . implode('%2C', $chunk) . '&fields=items(contentDetails%2Cid)&key=' . $YT_API_KEY);
+	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=status%2CcontentDetails&id=' . implode('%2C', $chunk) . '&fields=items(id%2CcontentDetails(regionRestriction)%2Cstatus(uploadStatus))&key=' . $YT_API_KEY);
 	if($res === false) {
 		$online_check_success = false;
 		break;
@@ -42,7 +42,9 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos
 				//Availability status parsing
 				$list = array();
 				foreach($json['items'] as $item) {
-					$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
+					if($item['status']['uploadStatus'] == 'processed') {
+						$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
+					}
 				}
 				//Merge results into the checklist
 				if(!empty($list)) {
