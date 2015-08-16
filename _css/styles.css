@@ -317,7 +317,7 @@ table {
 	background-color: #F0F0F0;
 }
 
-#gallery figure:focus, #gallery figure:active {
+#gallery figure:focus, #gallery figure:active, #gallery .figure_active {
 	background-color: #E9E9E9;
 	border: 1px solid #4FA6FD;
 	box-shadow: 0px 0px 4px 0px #4FA6FD;
@@ -351,7 +351,7 @@ table {
 	display: block;
 }
 
-#gallery figure .more:hover {
+#gallery figure .more:hover, #gallery figure .more_hover {
 	display: block;
 }
 
@@ -371,7 +371,7 @@ table {
 	text-decoration: none;
 }
 
-#gallery figure .more a:hover {
+#gallery figure .more a:hover, #gallery figure .more .zeroclipboard-is-hover {
 	background-color: rgba(0, 160, 216, 0.6);
 }
 

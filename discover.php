@@ -1,6 +1,17 @@
 <?php
 $time_start = microtime(true);
 
+$domain = 'http://v.toine512.fr/';
+function domainCat($lnk, $display = false)
+{
+	global $domain;
+	return $display ? htmlspecialchars($domain . $lnk) : $domain . rawurlencode($lnk);
+}
+function youtubeCat($id, $display = false)
+{
+	return $display ? htmlspecialchars('http://youtu.be/' . $id) : 'http://youtu.be/' . rawurlencode($id);
+}
+
 require('_conf/bookmarks.array.php'); //Loads $bookmarks
 
 //Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
@@ -74,6 +85,7 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos
 	<link rel="stylesheet" href="_css/styles.css" media="all" />
 </head>
 <body>
+	<script type="text/javascript" src="_js/ZeroClipboard.min.js"></script>
 	<section>
 		<h1>toine512 TROLOLOL YouTube shortener (aka Turtleator)</h1>
 		<h2>(**with awesome fullpage crap!)</h2>
@@ -103,18 +115,22 @@ foreach($bookmarks as $key => $video) :
 		elseif($check[$video['id']] !== true) {
 			$classes[] = 'blocked'; }
 	}
+	
+	$title = htmlspecialchars($video['title']);
 ?>
 			<figure<?php if(!empty($classes)) { echo ' class="' . implode(' ', $classes) . '"'; } ?>>
 <?php if(in_array('blocked', $classes)) : ?>
 				<p>Blocked : <?php echo htmlspecialchars(implode(' ', $check[$video['id']])); ?></p>
 <?php endif; ?>
-				<img src="https://img.youtube.com/vi/<?php echo $video['id']; ?>/mqdefault.jpg" alt="video thumbnail" />
+				<img src="https://img.youtube.com/vi/<?php echo $video['id']; ?>/mqdefault.jpg" alt="<?php echo $title; ?> thumbnail" />
 <?php if(in_array('dead', $classes)) : ?>
 				<p>OFFLINE</p>
-<?php else : ?>
-				<p class="more"><a onclick="return false;" href="http://v.toine512.fr/<?php echo $key ?>" target="_blank"><span>http://v.toine512.fr/<?php echo $key ?></span><?php if(array_key_exists('aliases', $video)) { echo '<span>' . implode('', $video['aliases']) . '</span>'; } ?></a> <a onclick="return false;" href="http://youtu.be/<?php echo $video['id']; ?>" target="_blank">http://youtu.be/<?php echo $video['id']; ?></a></p>
+<?php else :
+		$link = domainCat($key);
+		$ytlink = youtubeCat($video['id']); ?>
+				<p class="more"><a class="zeroclipboard-btn" data-clipboard-text="<?php echo $link; ?>" href="<?php echo $link; ?>"><span><?php echo domainCat($key, true); ?></span><?php if(array_key_exists('aliases', $video)) { echo '<span>' . implode('', $video['aliases']) . '</span>'; } ?></a><a class="zeroclipboard-btn" data-clipboard-text="<?php echo $ytlink; ?>" href="<?php echo $ytlink; ?>"><?php echo youtubeCat($video['id'], true); ?></a></p>
 <?php endif; ?>
-				<figcaption title="<?php echo htmlspecialchars($video['title']); ?>"><a href="http://v.toine512.fr/<?php echo $key ?>" target="_blank"><span><?php echo htmlspecialchars($video['title']); ?></span></a></figcaption>
+				<figcaption title="<?php echo $title; ?>"><a href="<?php echo $link; ?>" target="_blank"><span><?php echo $title; ?></span></a></figcaption>
 			</figure>
 <?php
 endforeach;
@@ -149,8 +165,45 @@ endforeach;
 		<h3>Player keyboard controls</h3>
 		<p>Spacebar: Play / Pause<br />Arrow Left: Jump back 10% in the current video<br />Arrow Right: Jump ahead 10% in the current video<br />Arrow Up: Volume up<br />Arrow Down: Volume Down</p>
 	</section>
+	<script type="text/javascript">
+var btns = document.getElementsByClassName('zeroclipboard-btn');
+
+//We have to simulate :hover and :active
+var hoverSimulator = new MutationObserver(function(mut) {
+	for(var i=0 ; i < mut.length ; i++) {
+		if(mut[i].type == 'attributes' && mut[i].attributeName == 'class') {
+			// :hover emulation
+			if(mut[i].target.classList.contains('zeroclipboard-is-hover')) {
+				mut[i].target.parentNode.classList.add('more_hover');
+			}
+			else {
+				mut[i].target.parentNode.classList.remove('more_hover');
+			}
+			
+			// :active emulation
+			if(mut[i].target.classList.contains('zeroclipboard-is-active')) {
+				mut[i].target.parentNode.parentNode.classList.add('figure_active');
+			}
+			else {
+				mut[i].target.parentNode.parentNode.classList.remove('figure_active');
+			}
+		}
 	}
+} );
+
+var client = new ZeroClipboard(btns);
+
+client.on('ready', function(e) {
+	for(var i=0 ; i < btns.length ; i++) {
+		//Disable links
+		btns[i].addEventListener('click', function(e) { e.preventDefault(); });
+		//Set observer for event emulation
+		hoverSimulator.observe(btns[i], { attributes: true });
 	}
+} );
+
+client.on('error', function(event) { ZeroClipboard.destroy(); });
+	</script>
 </body>
 <!-- Powered by GLaDOS. -->
 <?php
