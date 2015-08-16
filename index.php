@@ -109,14 +109,19 @@ html, body, iframe {
 <?php if($loop): ?>
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
+var start = <?php echo $start; ?>;
+
 var ytplayer;
 function onYouTubeIframeAPIReady() {
     ytplayer = new YT.Player('ytplayer', { events: {'onStateChange': onPlayerStateChange} });
 }
 
 function onPlayerStateChange(event) {
-    if(event.data == YT.PlayerState.ENDED) {
-        event.target.playVideo();
+	if(event.data == YT.PlayerState.ENDED || (event.data == YT.PlayerState.PAUSED && event.target.getCurrentTime() == 0)) {
+		if(start != 0 && event.target.getCurrentTime() == 0) {
+			event.target.seekTo(start, true);
+		}
+		event.target.playVideo();
     }
 }
 	</script>
