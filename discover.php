@@ -20,10 +20,13 @@ foreach($bookmarks as $key => $line)
 {
 	//Alias handling
 	if(array_key_exists('alias', $line)) {
+		//Change structure: extract aliases and put them as an "attribute" of the main bookmark
 		$bookmarks[$line['alias']]['aliases'][] = $key;
 		unset($bookmarks[$key]);
 	}
-	//YouTube checklist construction
+	
+	//YouTube checklist init
+	//just YTvid -> false
 	else {
 		$check[$line['id']] = false;
 	}
@@ -37,17 +40,21 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos
 {
 	//YouTube API v3 call
 	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=status%2CcontentDetails&id=' . implode('%2C', $chunk) . '&fields=items(id%2CcontentDetails(regionRestriction)%2Cstatus(uploadStatus))&key=' . $YT_API_KEY);
+	//Fail
 	if($res === false) {
 		$online_check_success = false;
 		break;
 	}
+	//Success
 	else {
 		//Decode JSON response
 		$json = json_decode($res, true);
+		//Fail
 		if($json === null) {
 			$online_check_success = false;
 			break;
 		}
+		//Success
 		else {
 			if(isset($json['items'])) {
 				//Availability status parsing
@@ -62,6 +69,7 @@ foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos
 					$check = array_merge($check, $list);
 				}
 			}
+			//Something went wrong with the request/answer
 			else {
 				$online_check_success = false;
 				break;
