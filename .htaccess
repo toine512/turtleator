@@ -2,3 +2,18 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule (.+) index.php?v=$1 [L,QSA]
+
+<IfModule mod_expires.c>
+ExpiresActive On 
+# Default directive
+ExpiresDefault "access plus 1 month"
+# Images
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+# CSS
+ExpiresByType text/css "access plus 1 year"
+# Javascript
+ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
