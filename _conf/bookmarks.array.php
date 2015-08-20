@@ -29,7 +29,7 @@ $bookmarks = array(
 'fukkireta' => array('id' => 'yS5RUcyOZiQ', 'title' => 'Fukkireta - Kasane Teto', 'loop' => true),
 'fukkireta2'=> array('id' => 'kuNixp-wvWM', 'title' => 'Lon\'s Fukkireta', 'loop' => true),
 'nyan'      => array('id' => 'QH2-TGUlwu4', 'title' => 'Nyan Cat'),
-'pasta'     => array('id' => 'FU8klxyzYgc', 'title' => 'PASTAAAA~'),
+'pasta'     => array('id' => 'N_YzGv4GjvU', 'title' => 'PASTAAAA~'),
 'hobbits'   => array('id' => 'uE-1RPDqJAY', 'title' => 'They\'re Taking the Hobbits to Isengard', 'loop' => true),
 'nimu'      => array('id' => 'vTuOBXZ3upA', 'title' => 'Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu Nimu'),
 'puddi'     => array('id' => '9sEI1AUFJKw', 'title' => 'PUDDI PUDDI'),
