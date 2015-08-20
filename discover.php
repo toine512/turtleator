@@ -12,69 +12,102 @@ function youtubeCat($id, $display = false)
 	return $display ? htmlspecialchars('http://youtu.be/' . $id) : 'http://youtu.be/' . rawurlencode($id);
 }
 
-require('_conf/bookmarks.array.php'); //Loads $bookmarks
-
-//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
-$check = array();
-foreach($bookmarks as $key => $line)
+//Load bookmarks
+if(apc_exists('bookmarks-array')) //Cache reading
 {
-	//Alias handling
-	if(array_key_exists('alias', $line)) {
-		//Change structure: extract aliases and put them as an "attribute" of the main bookmark
-		$bookmarks[$line['alias']]['aliases'][] = $key;
-		unset($bookmarks[$key]);
+	$bookmarks = apc_fetch('bookmarks-array');
+	$check = apc_fetch('bookmarks-unchecked');
+}
+else
+{
+	require('_conf/bookmarks.array.php');
+
+	//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
+	$check = array();
+	foreach($bookmarks as $key => $line)
+	{
+		//Alias handling
+		if(array_key_exists('alias', $line)) {
+			//Change structure: extract aliases and put them as an "attribute" of the main bookmark
+			$bookmarks[$line['alias']]['aliases'][] = $key;
+			unset($bookmarks[$key]);
+		}
+		
+		//YouTube checklist init
+		//just YTvid -> false
+		else {
+			$check[$line['id']] = false;
+		}
 	}
 	
-	//YouTube checklist init
-	//just YTvid -> false
-	else {
-		$check[$line['id']] = false;
-	}
+	//Cache writing
+	apc_store('bookmarks-array', $bookmarks, 3600);
+	apc_store('bookmarks-unchecked', $check, 3600);
 }
 
 //Youtube availability checking
-require('_conf/yt_api_key.php'); //Loads YouTube API server private key
-
-$online_check_success = true; //Set to false upon any critical error
-foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos.list query length to 50 items
+$must_revalidate = true;
+$online_check_success = false;
+if(apc_exists('bookmarks-checked'))
 {
-	//YouTube API v3 call
-	$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=status%2CcontentDetails&id=' . implode('%2C', $chunk) . '&fields=items(id%2CcontentDetails(regionRestriction)%2Cstatus(uploadStatus))&key=' . $YT_API_KEY);
-	//Fail
-	if($res === false) {
-		$online_check_success = false;
-		break;
+	//Cache read
+	$cached = apc_fetch('bookmarks-checked');
+	if(empty(array_diff_key($check, $cached)))
+	{
+		$check = $cached;
+		$must_revalidate = false;
+		$online_check_success = true;
 	}
-	//Success
-	else {
-		//Decode JSON response
-		$json = json_decode($res, true);
+}
+
+if($must_revalidate)
+{
+	require('_conf/yt_api_key.php'); //Loads YouTube API server private key
+
+	$online_check_success = true; //Set to false upon any critical error
+	foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos.list query length to 50 items
+	{
+		//YouTube API v3 call
+		$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=status%2CcontentDetails&id=' . implode('%2C', $chunk) . '&fields=items(id%2CcontentDetails(regionRestriction)%2Cstatus(uploadStatus))&key=' . $YT_API_KEY);
 		//Fail
-		if($json === null) {
+		if($res === false) {
 			$online_check_success = false;
 			break;
 		}
 		//Success
 		else {
-			if(isset($json['items'])) {
-				//Availability status parsing
-				$list = array();
-				foreach($json['items'] as $item) {
-					if($item['status']['uploadStatus'] == 'processed') {
-						$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
-					}
-				}
-				//Merge results into the checklist
-				if(!empty($list)) {
-					$check = array_merge($check, $list);
-				}
-			}
-			//Something went wrong with the request/answer
-			else {
+			//Decode JSON response
+			$json = json_decode($res, true);
+			//Fail
+			if($json === null) {
 				$online_check_success = false;
 				break;
 			}
-		}	
+			//Success
+			else {
+				if(isset($json['items'])) {
+					//Availability status parsing
+					$list = array();
+					foreach($json['items'] as $item) {
+						if($item['status']['uploadStatus'] == 'processed') {
+							$list[$item['id']] = (isset($item['contentDetails']['regionRestriction']['blocked']) ? $item['contentDetails']['regionRestriction']['blocked'] : true);
+						}
+					}
+					//Merge results into the checklist
+					if(!empty($list)) {
+						$check = array_merge($check, $list);
+						
+						//Cache write
+						apc_store('bookmarks-checked', $check, 86400);
+					}
+				}
+				//Something went wrong with the request/answer
+				else {
+					$online_check_success = false;
+					break;
+				}
+			}	
+		}
 	}
 }
 ?>
