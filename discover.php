@@ -22,7 +22,7 @@ else
 {
 	//require('_conf/bookmarks.array.php');
 	
-	$bookmarks = json_decode(file_get_contents('http://github.com/toine512/turtleator/blob/master/bookmarks.json'), true);
+	$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
 	if($bookmarks === null) {
 		exit;
 	}
