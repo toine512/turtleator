@@ -12,13 +12,23 @@ function youtubeCat($id, $display = false)
 	return $display ? htmlspecialchars('http://youtu.be/' . $id) : 'http://youtu.be/' . rawurlencode($id);
 }
 
-//Load bookmarks
-if(apc_exists('bookmarks-array')) //Cache reading
-{
-	$bookmarks = apc_fetch('bookmarks-array');
-	$check = apc_fetch('bookmarks-unchecked');
+/*** Initializing cache engine ***/
+require_once('php-cache512/cache.php');
+$cache = new Cache512('file');
+
+/*** Load bookmarks ***/
+//Cache read
+$cache_read_ok = false;
+if($cache->fetch('bookmarks-array')) {
+	$bookmarks = $cache->data;
+	if($cache->fetch('bookmarks-unchecked')) {
+		$check = $cache->data;
+		$cache_read_ok = true;
+	}
 }
-else
+
+//If no cache
+if(!$cache_read_ok)
 {
 	//Downloading bookmarks
 	$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
@@ -44,18 +54,20 @@ else
 		}
 	}
 	
-	//Cache writing
-	apc_store('bookmarks-array', $bookmarks, 3600);
-	apc_store('bookmarks-unchecked', $check, 3600);
+	//Cache write
+	$cache->data = $bookmarks;
+	$cache->store('bookmarks-array', 3600);
+	$cache->data = $check;
+	$cache->store('bookmarks-unchecked', 3600);
 }
 
-//Youtube availability checking
+/*** Youtube availability checking ***/
 $must_revalidate = true;
 $online_check_success = false;
-if(apc_exists('bookmarks-checked'))
+//Cache read
+if($cache->fetch('bookmarks-checked'))
 {
-	//Cache read
-	$cached = apc_fetch('bookmarks-checked');
+	$cached = $cache->data;
 	if(empty(array_diff_key($check, $cached)))
 	{
 		$check = $cached;
@@ -102,7 +114,8 @@ if($must_revalidate)
 						$check = array_merge($check, $list);
 						
 						//Cache write
-						apc_store('bookmarks-checked', $check, 86400);
+						$cache->data = $check;
+						$cache->store('bookmarks-checked', 86400);
 					}
 				}
 				//Something went wrong with the request/answer

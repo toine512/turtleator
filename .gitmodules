@@ -1,0 +1,3 @@
+[submodule "php-cache512"]
+	path = php-cache512
+	url = https://github.com/toine512/php-cache512.git
