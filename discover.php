@@ -20,11 +20,10 @@ if(apc_exists('bookmarks-array')) //Cache reading
 }
 else
 {
-	//require('_conf/bookmarks.array.php');
-	
+	//Downloading bookmarks
 	$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
 	if($bookmarks === null) {
-		exit;
+		exit('Failed downloading bookmarks from GitHub !  (http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json)');
 	}
 
 	//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
