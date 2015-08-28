@@ -20,7 +20,12 @@ if(apc_exists('bookmarks-array')) //Cache reading
 }
 else
 {
-	require('_conf/bookmarks.array.php');
+	//require('_conf/bookmarks.array.php');
+	
+	$bookmarks = json_decode(file_get_contents('http://github.com/toine512/turtleator/blob/master/bookmarks.json'), true);
+	if($bookmarks === null) {
+		exit;
+	}
 
 	//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
 	$check = array();
