@@ -15,6 +15,13 @@
 		"title": "Instant Crush (ft. Julian Casablancas) - Daft Punk",
 		"loop": true
 	},
+	"bonchance": {
+		"id": "OvUibopO-ow",
+		"title": "Bon chance."
+	},
+	"chance": {
+		"alias": "bonchance"
+	},
 	"pasfaux": {
 		"id": "-5NipHAtvHY",
 		"title": "C'est pas faux."
