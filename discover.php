@@ -15,50 +15,49 @@ function youtubeCat($id, $display = false)
 /*** Initializing cache engine ***/
 require_once('php-cache512/cache.php');
 $cache = new Cache512('file');
+$cache_msgs = array();
 
 /*** Load bookmarks ***/
-$must_dl_bookmarks = true;
 //Cache read
-if($cache->fetch('bookmarks-array')) {
-	$bookmarks = $cache->data;
-	if($cache->fetch('bookmarks-unchecked')) {
-		$availability_check_list = $cache->data;
-		$must_dl_bookmarks = false;
-	}
-}
-
-//If no cache
-if($must_dl_bookmarks)
+if($cache->fetch('bookmarks-array'))
 {
+	$cache_msgs[] = 'Reading bookmarks from cache.';
+	$bookmarks = $cache->data;
+}
+else
+{
+	$cache_msgs[] = $cache->last_error();
 	//Downloading bookmarks
 	$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
 	if($bookmarks === null) {
 		exit('Failed downloading bookmarks from GitHub !  (http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json)');
 	}
-
-	//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
-	$availability_check_list = array();
-	foreach($bookmarks as $key => $line)
-	{
-		//Alias handling
-		if(array_key_exists('alias', $line)) {
-			//Change structure: extract aliases and put them as an "attribute" of the main bookmark
-			$bookmarks[$line['alias']]['aliases'][] = $key;
-			unset($bookmarks[$key]);
-		}
-		
-		//YouTube checklist init
-		//just YTvid -> false
-		else {
-			$availability_check_list[$line['id']] = false;
+	else {
+		//Cache write
+		$cache->data = $bookmarks;
+		if(!$cache->store('bookmarks-array', 3600)) {
+			$cache_msgs[] = $cache->last_error();
+			echo 'Cache error: ' . $cache->last_error();
 		}
 	}
+}
+
+//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
+$availability_check_list = array();
+foreach($bookmarks as $key => $line)
+{
+	//Alias handling
+	if(array_key_exists('alias', $line)) {
+		//Change structure: extract aliases and put them as an "attribute" of the main bookmark
+		$bookmarks[$line['alias']]['aliases'][] = $key;
+		unset($bookmarks[$key]);
+	}
 	
-	//Cache write
-	$cache->data = $bookmarks;
-	$cache->store('bookmarks-array', 3600);
-	$cache->data = $availability_check_list;
-	$cache->store('bookmarks-unchecked', 3600);
+	//YouTube checklist init
+	//just YTvid -> false
+	else {
+		$availability_check_list[$line['id']] = false;
+	}
 }
 
 /*** Youtube availability checking ***/
@@ -67,6 +66,7 @@ $availability_check_success = false;
 //Cache read
 if($cache->fetch('bookmarks-checked'))
 {
+	$cache_msgs[] = 'Reading YouTube data from cache.';
 	//Bookmark list may have changed while the cache file is still valid
 	if(empty(array_diff_key($availability_check_list, $cache->data)))
 	{
@@ -75,9 +75,13 @@ if($cache->fetch('bookmarks-checked'))
 		$availability_check_success = true;
 	}
 }
+else {
+	$cache_msgs[] = $cache->last_error();
+}
 
 if($must_revalidate)
 {
+	$cache_msgs[] = 'Must revalidate YouTube data.';
 	require('_conf/yt_api_key.php'); //Loads YouTube API server private key
 
 	$availability_check_success = true; //Set to false upon any critical error
@@ -115,7 +119,10 @@ if($must_revalidate)
 						
 						//Cache write
 						$cache->data = $availability_check_list;
-						$cache->store('bookmarks-checked', 86400);
+						if(!$cache->store('bookmarks-checked', 86400)) {
+							$cache_msgs[] = $cache->last_error();
+							echo 'Cache error: ' . $cache->last_error();
+						}
 					}
 				}
 				//Something went wrong with the request/answer
@@ -265,8 +272,9 @@ client.on('error', function(event) { ZeroClipboard.destroy(); });
 	</script>
 </body>
 <!-- Powered by GLaDOS. -->
-<?php
+<!-- Logs:
+<?php echo implode("\n", $cache_msgs); ?> -->
+<!-- Processing time : <?php
 $time_end = microtime(true);
-echo '<!-- Processing time : ' . round(($time_end - $time_start) * 1000, 4) . " ms -->\n";
-?>
+echo round(($time_end - $time_start) * 1000, 4); ?> ms -->
 </html>
