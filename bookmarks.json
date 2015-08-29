@@ -48,10 +48,10 @@
 	},
 	"asdf": {
 		"id": "IYnsfV5N2n8",
-		"title": "asdfmovie",
-		"aliases": [
-			"asdf1"
-		]
+		"title": "asdfmovie"
+	},
+	"asdf1": {
+		"alias": "asdf"
 	},
 	"asdf2": {
 		"id": "tKB4h9gvmm0",
@@ -87,10 +87,10 @@
 	},
 	"cafe": {
 		"id": "UGtKGX8B9hU",
-		"title": "Le Café - Oldelaf",
-		"aliases": [
-			"café"
-		]
+		"title": "Le Café - Oldelaf"
+	},
+	"café": {
+		"alias": "cafe"
 	},
 	"yuki": {
 		"id": "NI_fgwbmJg0",
@@ -230,10 +230,10 @@
 	},
 	"vole": {
 		"id": "VVpf8lGIriQ",
-		"title": "Ils nous l'ont volé !",
-		"aliases": [
-			"volé"
-		]
+		"title": "Ils nous l'ont volé !"
+	},
+	"volé": {
+		"alias": "vole"
 	},
 	"fuck": {
 		"id": "cACZc6gYi9s",
