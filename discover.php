@@ -1,11 +1,11 @@
 <?php
 $time_start = microtime(true);
 
-$domain = 'http://v.toine512.fr/';
+$BASE_URL = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http') . '://' . $_SERVER['SERVER_NAME'] . '/';
 function domainCat($lnk, $display = false)
 {
-	global $domain;
-	return $display ? htmlspecialchars($domain . $lnk) : $domain . rawurlencode($lnk);
+	global $BASE_URL;
+	return $display ? htmlspecialchars($BASE_URL . $lnk) : $BASE_URL . rawurlencode($lnk);
 }
 function youtubeCat($id, $display = false)
 {
