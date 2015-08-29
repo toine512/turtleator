@@ -1,8 +1,14 @@
+### Rewrite
 RewriteEngine on
+
+# Protect .git folders, .gitignore
+RewriteRule ^(.*/)?\.git+ - [R=404,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule (.+) index.php?v=$1 [L,QSA]
 
+### Browser caching
 <IfModule mod_expires.c>
 ExpiresActive On 
 # Default directive

@@ -1,4 +1,10 @@
 #################
+## Turtleator
+#################
+_conf/yt_api_key.php
+*.512cache
+
+#################
 ## Eclipse
 #################
 
@@ -162,4 +168,3 @@ pip-log.txt
 # Mac crap
 .DS_Store
 tracker.txt
-_conf/yt_api_key.php
