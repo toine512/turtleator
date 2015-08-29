@@ -180,7 +180,7 @@ foreach($bookmarks as $key => $video) :
 <?php if(in_array('blocked', $classes)) : ?>
 				<p>Blocked : <?php echo htmlspecialchars(implode(' ', $availability_check_list[$video['id']])); ?></p>
 <?php endif; ?>
-				<img src="thumbcache/<?php echo $video['id']; ?>.jpg" alt="<?php echo $title; ?> thumbnail" />
+				<img src="_thumbcache/<?php echo $video['id']; ?>.jpg" alt="<?php echo $title; ?> thumbnail" />
 <?php if(in_array('dead', $classes)) : ?>
 				<p>OFFLINE</p>
 <?php else :
