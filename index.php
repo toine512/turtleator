@@ -24,7 +24,26 @@ if(isset($_GET['v']))
 	{
 		if($_GET['v'] != 'turtle' && $_GET['v'] != 'mineturtle' && $_GET['v'] != 'mine turtle') //You explicitly want to be turtle'd here! So we'll keep default Turtleator values.
 		{
-			require('_conf/bookmarks.array.php'); //Loads $bookmarks
+			/*** Loading bookmarks ***/
+			require_once('php-cache512/cache.php');
+			$cache = new Cache512('file');
+			//Cache read
+			if($cache->fetch('bookmarks-array')) {
+				$bookmarks = $cache->data;
+			}
+			else
+			{
+				//Downloading bookmarks
+				$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
+				if($bookmarks === null) {
+					exit('Failed downloading bookmarks from GitHub !  (http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json)');
+				}
+
+				//Cache write
+				$cache->data = $bookmarks;
+				$cache->store('bookmarks-array', 3600);
+			}
+
 			function resolve_bookmark($v, $bookmarks)
 			{
 				if(array_key_exists($v, $bookmarks)) {
@@ -40,6 +59,7 @@ if(isset($_GET['v']))
 					return false;
 				}
 			}
+			/***   ***/
 
 			if($bm = resolve_bookmark($_GET['v'], $bookmarks)) //Is it a bookmark ?
 			{
