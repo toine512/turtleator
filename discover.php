@@ -17,18 +17,18 @@ require_once('php-cache512/cache.php');
 $cache = new Cache512('file');
 
 /*** Load bookmarks ***/
+$must_dl_bookmarks = true;
 //Cache read
-$cache_read_ok = false;
 if($cache->fetch('bookmarks-array')) {
 	$bookmarks = $cache->data;
 	if($cache->fetch('bookmarks-unchecked')) {
-		$check = $cache->data;
-		$cache_read_ok = true;
+		$availability_check_list = $cache->data;
+		$must_dl_bookmarks = false;
 	}
 }
 
 //If no cache
-if(!$cache_read_ok)
+if($must_dl_bookmarks)
 {
 	//Downloading bookmarks
 	$bookmarks = json_decode(file_get_contents('http://raw.githubusercontent.com/toine512/turtleator/master/bookmarks.json'), true);
@@ -37,7 +37,7 @@ if(!$cache_read_ok)
 	}
 
 	//Transform $bookmarks structure in order to handle aliases and create the checklist of video ids for online check
-	$check = array();
+	$availability_check_list = array();
 	foreach($bookmarks as $key => $line)
 	{
 		//Alias handling
@@ -50,29 +50,29 @@ if(!$cache_read_ok)
 		//YouTube checklist init
 		//just YTvid -> false
 		else {
-			$check[$line['id']] = false;
+			$availability_check_list[$line['id']] = false;
 		}
 	}
 	
 	//Cache write
 	$cache->data = $bookmarks;
 	$cache->store('bookmarks-array', 3600);
-	$cache->data = $check;
+	$cache->data = $availability_check_list;
 	$cache->store('bookmarks-unchecked', 3600);
 }
 
 /*** Youtube availability checking ***/
 $must_revalidate = true;
-$online_check_success = false;
+$availability_check_success = false;
 //Cache read
 if($cache->fetch('bookmarks-checked'))
 {
-	$cached = $cache->data;
-	if(empty(array_diff_key($check, $cached)))
+	//Bookmark list may have changed while the cache file is still valid
+	if(empty(array_diff_key($availability_check_list, $cache->data)))
 	{
-		$check = $cached;
+		$availability_check_list = $cache->data;
 		$must_revalidate = false;
-		$online_check_success = true;
+		$availability_check_success = true;
 	}
 }
 
@@ -80,14 +80,14 @@ if($must_revalidate)
 {
 	require('_conf/yt_api_key.php'); //Loads YouTube API server private key
 
-	$online_check_success = true; //Set to false upon any critical error
-	foreach(array_chunk(array_keys($check), 50, true) as $chunk) //API limits videos.list query length to 50 items
+	$availability_check_success = true; //Set to false upon any critical error
+	foreach(array_chunk(array_keys($availability_check_list), 50, true) as $chunk) //API limits videos.list query length to 50 items
 	{
 		//YouTube API v3 call
 		$res = file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=status%2CcontentDetails&id=' . implode('%2C', $chunk) . '&fields=items(id%2CcontentDetails(regionRestriction)%2Cstatus(uploadStatus))&key=' . $YT_API_KEY);
 		//Fail
 		if($res === false) {
-			$online_check_success = false;
+			$availability_check_success = false;
 			break;
 		}
 		//Success
@@ -96,7 +96,7 @@ if($must_revalidate)
 			$json = json_decode($res, true);
 			//Fail
 			if($json === null) {
-				$online_check_success = false;
+				$availability_check_success = false;
 				break;
 			}
 			//Success
@@ -111,16 +111,16 @@ if($must_revalidate)
 					}
 					//Merge results into the checklist
 					if(!empty($list)) {
-						$check = array_merge($check, $list);
+						$availability_check_list = array_merge($availability_check_list, $list);
 						
 						//Cache write
-						$cache->data = $check;
+						$cache->data = $availability_check_list;
 						$cache->store('bookmarks-checked', 86400);
 					}
 				}
 				//Something went wrong with the request/answer
 				else {
-					$online_check_success = false;
+					$availability_check_success = false;
 					break;
 				}
 			}	
@@ -154,7 +154,7 @@ if($must_revalidate)
 	</section>
 	<section>
 		<h3>List of bookmarks.</h3>
-<?php if(!$online_check_success) : ?>
+<?php if(!$availability_check_success) : ?>
 		<p>Availability checking of YouTube videos failed!</p>
 <?php endif; ?>
 		<div id="gallery">
@@ -166,11 +166,11 @@ foreach($bookmarks as $key => $video) :
 	if(array_key_exists('loop', $video)) {
 		$classes[] = 'loops'; }
 
-	if($online_check_success)
+	if($availability_check_success)
 	{
-		if($check[$video['id']] === false) {
+		if($availability_check_list[$video['id']] === false) {
 			$classes[] = 'dead'; }
-		elseif($check[$video['id']] !== true) {
+		elseif($availability_check_list[$video['id']] !== true) {
 			$classes[] = 'blocked'; }
 	}
 	
@@ -178,7 +178,7 @@ foreach($bookmarks as $key => $video) :
 ?>
 			<figure<?php if(!empty($classes)) { echo ' class="' . implode(' ', $classes) . '"'; } ?>>
 <?php if(in_array('blocked', $classes)) : ?>
-				<p>Blocked : <?php echo htmlspecialchars(implode(' ', $check[$video['id']])); ?></p>
+				<p>Blocked : <?php echo htmlspecialchars(implode(' ', $availability_check_list[$video['id']])); ?></p>
 <?php endif; ?>
 				<img src="thumbcache/<?php echo $video['id']; ?>.jpg" alt="<?php echo $title; ?> thumbnail" />
 <?php if(in_array('dead', $classes)) : ?>
