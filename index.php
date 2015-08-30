@@ -39,22 +39,25 @@ if(isset($_GET['v']) && !empty($_GET['v']))
 			$cache->store('bookmarks-array', 3600);
 		}
 
-			function resolve_bookmark($v, $bookmarks)
-			{
-				if(array_key_exists($v, $bookmarks)) {
-					$bm = $bookmarks[$v];
-					if(array_key_exists('alias', $bm)) {
-						return resolve_bookmark($bm['alias'], $bookmarks);
-					}
-					else {
-						return $bm;
-					}
+		function resolve_bookmark($v, $bookmarks)
+		{
+			static $depth = 0; //Limit recursion
+			if($depth < 50 && array_key_exists($v, $bookmarks)) {
+				$depth++;
+				$bm = $bookmarks[$v];
+				
+				if(array_key_exists('alias', $bm)) {
+					return resolve_bookmark($bm['alias'], $bookmarks);
 				}
 				else {
-					return false;
+					return $bm;
 				}
 			}
-			/***   ***/
+			else {
+				return false;
+			}
+		}
+		/***   ***/
 
 		if($bm = resolve_bookmark($_GET['v'], $bookmarks)) //Is it a bookmark ?
 		{
