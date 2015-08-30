@@ -140,7 +140,7 @@ function onPlayerStateChange(event) {
 <?php endif; ?>
 </head>
 <body>
-	<iframe id="ytplayer" seamless src="https://www.youtube.com/embed/<?php echo $vid; ?>?modestbranding=1&amp;autoplay=1&amp;rel=0&amp;<?php echo /*Player controls forcing*/ (isset($_GET['c'])) ? 'controls=1&amp;showinfo=1' : 'controls=0&amp;showinfo=0'; /***/ /*Video start time*/ if($start > 0) {echo '&amp;start=' . $start;} /***/ /*Video end time*/ if($end > 0) {echo '&amp;end=' . $end;} /***/ /*Loop control*/ if($loop) {echo '&amp;enablejsapi=1&amp;origin=http://' . $_SERVER['HTTP_HOST'];} /***/?>"></iframe>
+	<iframe id="ytplayer" seamless src="https://www.youtube.com/embed/<?php echo $vid; ?>?modestbranding=1&amp;autoplay=1&amp;rel=0&amp;<?php echo /*Player controls forcing*/ (isset($_GET['c'])) ? 'controls=1&amp;showinfo=1' : 'controls=0&amp;showinfo=0'; /***/ /*Video start time*/ if($start > 0) {echo '&amp;start=' . $start;} /***/ /*Video end time*/ if($end > 0) {echo '&amp;end=' . $end;} /***/ /*Loop control*/ if($loop) {echo '&amp;enablejsapi=1&amp;origin=' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http') . '://' . $_SERVER['SERVER_NAME'];} /***/?>"></iframe>
 </body>
 <!-- Powered by GLaDOS. -->
 <!-- Processing time : <?php
