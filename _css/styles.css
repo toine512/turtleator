@@ -251,7 +251,7 @@ table {
 	box-shadow: 1px 2px 2px 1px #EDEDED;
 }
 
-/* Fills the last rown
+/* Fill the last row with
    18 divs for 5120px wide screen */
 #gallery .flex-filler {
 	width: 282px; /*Calculated from above : 256 + 2*1 + 12*2 = 282*/
