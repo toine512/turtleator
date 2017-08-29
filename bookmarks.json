@@ -27,27 +27,33 @@
 		"loop": true
 	},
 	"bonchance": {
-		"id": "OvUibopO-ow",
-		"title": "Bon chance."
+		"id": "luKp37yd-rk",
+		"title": "Bon chance.",
+		"start": 88,
+		"end": 90
 	},
 	"chance": {
 		"alias": "bonchance"
 	},
-	"pasfaux": {
-		"id": "-5NipHAtvHY",
-		"title": "C'est pas faux."
+	"classe": {
+		"id": "Wwx1HQ_aYvI",
+		"title": "Sans déconner c'est classe ou pas ?"
 	},
 	"merde": {
-		"id": "M1r4d2UWRPc",
+		"id": "qjRiv3CdPDU",
 		"title": "C'est d'la merde."
 	},
 	"gras": {
-		"id": "EDfVw6kBW50",
+		"id": "x2QBDQXn3iU",
 		"title": "Le gras, c'est la vie."
 	},
 	"eneffet": {
 		"id": "MJfbNNBbTsM",
 		"title": "En effet."
+	},
+	"faux": {
+		"id": "lB53WZJ2r4s",
+		"title": "Non c'est faux."
 	},
 	"unac": {
 		"id": "aaSRYecKaqc",
@@ -206,7 +212,7 @@
 		"title": "Voldemort laughing like a retard"
 	},
 	"tunak": {
-		"id": "mg-4c4uQmdo",
+		"id": "vTIIMJ9tUc8",
 		"title": "Tunak Tunak Tun - Daler Mehndi"
 	},
 	"trouducul": {
@@ -237,10 +243,10 @@
 		"loop": true
 	},
 	"crescentl": {
-		"id": "jl_YOFe42K0",
+		"id": "IBf04Z092FY",
 		"title": "Happy crescent - Tōyama Nao (live)",
-		"start": 15,
-		"end": 241,
+		"start": 4,
+		"end": 221,
 		"loop": true
 	},
 	"dumb": {
@@ -264,7 +270,7 @@
 		"alias": "vole"
 	},
 	"fuck": {
-		"id": "cACZc6gYi9s",
+		"id": "JukJwqEAnxM",
 		"title": "We fuck the world"
 	},
 	"polkka": {
@@ -284,8 +290,8 @@
 		"title": "PON PON PON - Kyary Pamyu Pamyu"
 	},
 	"mpirate": {
-		"id": "GXoZsgNHquM",
-		"title": "You Are A Pirate - Alestorm"
+		"id": "i8ju_10NkGY",
+		"title": "You Are A Pirate - Alestorm (Lazy Town)"
 	},
 	"lilgirls": {
 		"id": "hYn7q953NTg",
