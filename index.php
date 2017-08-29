@@ -84,7 +84,7 @@ if(isset($_GET['v']) && !empty($_GET['v']))
 }
 /***   ***/
 
-/*** Loop forcing ***/
+/*** Loop enforcement ***/
 //Overrides bookmark settings if not auto, if l == 'auto', see at the top of this file
 if(isset($_GET['l']) && $_GET['l'] != 'auto')
 {
