@@ -147,20 +147,21 @@ if($must_revalidate)
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<link href="http://fonts.googleapis.com/css?family=Clicker+Script|Titillium+Web:600" rel="stylesheet">
 	<link rel="stylesheet" href="_css/styles.css" media="all" />
 </head>
 <body>
 	<script type="text/javascript" src="_js/ZeroClipboard.min.js"></script>
+		<h1>Turtleator</h1>
 	<section>
-		<h1>toine512 TROLOLOL YouTube shortener (aka Turtleator)</h1>
-		<h2>(**with awesome fullpage crap!)</h2>
+		<!--<h2>(**with awesome fullpage crap!)</h2>-->
 		<h3>Play any YouTube video fullpage, without controls.</h3>
 		<p>http://<b>turtle</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
 		<p>http://<b>v</b>.toine512.fr/<b>&lt;video_id&gt;</b></p>
 		<p>See below for manual looping control and controls re-enabling.</p>
 	</section>
 	<section>
-		<h3>List of bookmarks.</h3>
+		<h3>List of bookmarks</h3>
 <?php if(!$availability_check_success) : ?>
 		<p>Availability checking of YouTube videos failed!</p>
 <?php endif; ?>

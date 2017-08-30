@@ -229,7 +229,40 @@ table {
 /* ----------------------------- */
 /* ===       Turtleator      === */
 /* ----------------------------- */
-/* Style code */
+html, 
+body {
+	background-color: #3F51B5;
+	color: #FFFFFF;
+}
+
+h1 {
+	margin: 0;
+	font-family: 'Clicker Script', cursive;
+	font-weight: 600;
+	font-size: 10rem;
+	text-align: center;
+}
+
+section {
+	margin: 2.6%;
+	padding: 10px;
+	border: 1px solid #000000;
+	border-radius: 2px;
+	/* overflow: hidden; */
+	background-color: #FEFEFE;
+	box-shadow: 1px 1px 1px 2px #5c4db3, 2px 3px 7px 0px #728ae9;
+	color: #000064;
+}
+
+section h3 {
+	/*color: #29B6F6;*/
+	color: #7CB342;
+	/*color: #4CAF50;*/
+	/*color: #E91E63;*/
+	font-family: 'Titillium Web';
+	font-weight: 600;
+}
+
 #gallery {
 	margin: 20px;
 	display: flex;
